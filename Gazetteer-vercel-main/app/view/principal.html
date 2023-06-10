@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Leaflet Map-->
+    <link href="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="Leaflet.Coordinates-master\dist\Leaflet.Coordinates-0.1.5.css"/>
+    <link rel="stylesheet" href="Leaflet.Coordinates-master\Leaflet.Coordinates-master\dist\Leaflet.Coordinates-0.1.5.ie.css"/>
+    <link rel="stylesheet" href="app\leaflet-locatecontrol-gh-pages\dist\L.Control.Locate.min.css"/>
+    <script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="Leaflet.Coordinates-master\Leaflet.Coordinates-master\dist\Leaflet.Coordinates-0.1.5.src.js"></script>
+    <script src="app\leaflet-locatecontrol-gh-pages\dist\L.Control.Locate.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #map {position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
+    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../styles/principal.css" />
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Dropdown link
+        </a>
+            <ul class="dropdown-menu">
+                    <li class="dropdown-item">
+                        <a href="opencagedata.html">
+                            Cage Data
+                        </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a href="openexchangerates.html">
+                            Change rates
+                        </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a href="restcountries.html">
+                            Rest countries
+                        </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a href="OpenWeather.html">
+                            Weather
+                        </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a href="OpenRouteService.html">
+                            Current localization
+                        </a>
+                    </li>
+            </ul>
+    </div>
+    <!--Leaflet Layer-->
+    <div id = "map"></div>
+    <script>
+        /*const key = 'O0qDkcwSS3s1D36lotca';
+        const map = new maplibregl.Map({
+        container: 'map',
+        style: `https://api.maptiler.com/maps/outdoor/style.json?key=${key}`,
+        center: [8.94738, 45.97812], // starting position [lng, lat]
+        zoom: 14, // starting zoom
+        pitch: 61,
+        bearing: 172,
+        hash: true
+      });
+        map.addControl(new maplibregl.NavigationControl(), 'top-left');
+
+        map.on('load', function (){
+        map.addSource("terrain", {
+            "type": "raster-dem",
+            "url": `https://api.maptiler.com/tiles/terrain-rgb-v2/tiles.json?key=${key}`
+        });
+        map.setTerrain({
+            source: "terrain"
+        });
+      });*/
+
+
+
+        var map = L.map('map').setView([0,0],1);
+        var osm = L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=hGSkgluqZjRiS1opIVZq', {
+            attribution: '<<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+        }).addTo(map);
+
+        /*var leafletIcon = L.icon ({
+            iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+            shadowUrl:'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+            iconSize: [38, 95],
+            iconAnchor:[22,94],
+            shadowAnchor: [4,62],
+            popupAnchor: [12,-90],
+        })*/
+
+        var LeafletIcon = L.Icon.extend({
+            options:{
+            shadowUrl:'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+            iconSize: [38,95],
+            shadownSize:[50,64],
+            iconAnchor:[22,94],
+            shadowAnchor: [4,62],
+            popupAnchor: [-3,-76]
+            }
+        });
+
+        var greenIcon = new LeafletIcon({iconUrl:'https://leafletjs.com/examples/custom-icons/leaf-green.png'}),
+            redIcon = new LeafletIcon({iconUrl:'https://leafletjs.com/examples/custom-icons/leaf-red.png'}),
+            orangeIcon = new LeafletIcon({iconUrl:'https://leafletjs.com/examples/custom-icons/leaf-orange.png'})
+
+        var marker = L.marker([51.5, -0.09],{icon:greenIcon}).addTo(map);
+        var marker = L.marker([52.489471, -1.898575],{icon:redIcon}).addTo(map);
+        var marker = L.marker([52.136436, -0.460739],{icon:orangeIcon}).addTo(map);
+        var marker = L.marker([51.454514, -2.587910]).addTo(map);
+        var marker = L.marker([54.175999, -6.349000]).addTo(map);
+        var marker = L.marker([36.533333, -6.283333]).addTo(map);
+        var marker = L.marker([37.783642, -3.783768]).addTo(map);
+        var marker = L.marker([36.719444, -4.420000]).addTo(map);
+
+        var circle = L.circle([51.508, -0.11],{
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 500,
+        }).addTo(map);
+
+        var polygon = L.polygon([
+        [51.509, -0.08],
+        [51.503, -0.06],
+        [51.51, -0.047],
+        ]).addTo(map);
+
+        marker.bindPopup("<b> Hey There! </b><br> I am a Marker.").openPopup();
+        circle.bindPopup("I am a circle");
+        polygon.bindPopup("I am a polygon");
+
+
+        L.Control.geocoder().addTo(map);
+
+        L.control.scale({
+            metric: true,
+            imperial: true,
+            maxWidht: 100,
+            position: 'bottomleft'
+        }).addTo(map);
+
+        var StamenWatercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            subdomains: 'abcd',
+            minZoom: 1,
+            maxZoom: 16,
+            ext: 'jpg'
+        });
+
+        var StamenTerrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            subdomains: 'abcd',
+            minZoom: 0,
+            maxZoom: 18,
+            ext: 'png'
+            });
+
+            //Leaflet layer control
+        var baseMaps = {
+            'Open Street Map': osm,
+            'Water Color': StamenWatercolor,
+            'Terrain':StamenTerrain
+            }
+
+            L.control.layers(baseMaps).addTo(map);
+
+            //current location
+            L.Control.locate().addTo(map);
+
+             //Coordinates
+        L.control.coordinates({
+            position: 'bottomleft',
+            useDMS: true,
+            labelTemplateLat: 'N {y}',
+            labelTemplateLng: 'E {x}',
+            useLatLngOrder: true
+        }).addTo(map);
+
+
+
+
+    </script>
+
+        </script>
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+
+    </div>
+</body>
+</html>
